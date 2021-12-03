@@ -16,37 +16,37 @@ public class Dice {
 		}
 	}
 
-	public static void diceRolls(int count) {
-		Stack<Integer> chosen = new Stack<>();
-		diceRolls(count, chosen);
-	}
-
-	private static void diceRolls(int available, Stack<Integer> chosen) {
-		if (available == 0) {
-			System.out.println(chosen);
-		} else {
-			for (int i = 1; i <= 6; i++) {
-				chosen.push(i); // choose
-				diceRolls(available - 1, chosen); // explore
-				chosen.pop(); // unchoose
-			}
-		}
-	}
+//	public static void diceRolls(int count) {
+//		Stack<Integer> chosen = new Stack<>();
+//		diceRolls(count, chosen);
+//	}
+//
+//	private static void diceRolls(int available, Stack<Integer> chosen) {
+//		if (available == 0) {
+//			System.out.println(chosen);
+//		} else {
+//			for (int i = 1; i <= 6; i++) {
+//				chosen.push(i); // choose
+//				diceRolls(available - 1, chosen); // explore
+//				chosen.pop(); // unchoose
+//			}
+//		}
+//	}
 
 	public static void diceSum(int count, int sum) {
 		Stack<Integer> chosen = new Stack<>();
-		diceSum(count, chosen, sum);
+		diceSum(count, chosen, sum, 0);
 	}
 
-	private static void diceSum(int available, Stack<Integer> chosen, int sum) {
+	private static void diceSum(int available, Stack<Integer> chosen, int sum, int runningTotal) {
 		if (available == 0) {
-			if (sum(chosen) == sum) {
+			if (runningTotal == sum) {
 				System.out.println(chosen);
 			}
-		} else {
+		} else if (runningTotal + available <= sum && runningTotal + available * 6 >= sum) {
 			for (int i = 1; i <= 6; i++) {
 				chosen.push(i); // choose
-				diceSum(available - 1, chosen, sum); // explore
+				diceSum(available - 1, chosen, sum, runningTotal + i); // explore
 				chosen.pop(); // unchoose
 			}
 		}
